@@ -1,6 +1,6 @@
 {
   "name": "zd-agent-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AI Agent ready Zendesk access through your existing browser session. No API keys required.",
   "license": "MIT",
   "type": "commonjs",
