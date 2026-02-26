@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+*.tgz
+
+# Runtime/state output
+output/
+
+# Local machine files
+.DS_Store
+.vscode/
+
+# Local secrets/config overrides
+zendesk.config.json
+.env
+.env.local
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

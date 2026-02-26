@@ -1,0 +1,28 @@
+{
+  "domain": "acme.zendesk.com",
+  "cdpUrl": "http://127.0.0.1:9223",
+  "cdpPortSpan": 10,
+  "allowSharedCdp": false,
+  "noAutoPort": false,
+  "profileDir": "./output/zendesk/chrome-profile",
+  "startPath": "/agent/filters/123456789",
+  "storeRoot": "./output/zendesk",
+  "cacheTtl": 120,
+  "cacheOnly": false,
+  "noCache": false,
+  "defaultQueue": "support",
+  "queues": {
+    "support": {
+      "path": "/agent/filters/123456789",
+      "team": "support"
+    },
+    "billing": {
+      "path": "/agent/filters/987654321",
+      "team": "billing"
+    }
+  },
+  "uiWaitMs": 1200,
+  "noLaunch": false,
+  "foreground": false,
+  "noStore": false
+}

@@ -1,0 +1,57 @@
+{
+  "name": "zd-agent-cli",
+  "version": "0.1.0",
+  "description": "AI Agent ready Zendesk access through your existing browser session. No API keys required.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "zagent": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "zendesk.config.example.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roger-rodriguez/zd-agent-cli.git"
+  },
+  "homepage": "https://github.com/roger-rodriguez/zd-agent-cli#readme",
+  "bugs": {
+    "url": "https://github.com/roger-rodriguez/zd-agent-cli/issues"
+  },
+  "keywords": [
+    "zendesk",
+    "cli",
+    "playwright",
+    "cdp"
+  ],
+  "scripts": {
+    "cli": "tsx src/cli.ts",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "lint": "eslint src test scripts",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.cjs",
+    "verify": "npm run lint && npm run typecheck && npm run build && npm run test && npm run smoke"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "get-port": "^7.1.0",
+    "playwright": "^1.58.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.2",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
