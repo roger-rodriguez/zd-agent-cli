@@ -1,0 +1,6 @@
+interface:
+  display_name: "Zendesk"
+  short_description: "Triage a Zendesk queue, process open tickets, or draft support replies."
+  icon_small: "./assets/zendesk.png"
+  icon_large: "./assets/zendesk.png"
+  default_prompt: "Help me triage a Zendesk queue."

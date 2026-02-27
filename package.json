@@ -11,7 +11,8 @@
     "dist",
     "README.md",
     "LICENSE",
-    "zendesk.config.example.json"
+    "zendesk.config.example.json",
+    ".agents"
   ],
   "engines": {
     "node": ">=20"
