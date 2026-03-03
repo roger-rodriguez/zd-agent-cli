@@ -180,6 +180,49 @@ export async function readTicketByIdApi(page: any, ticketId: string, options: { 
   };
 }
 
+export async function readTicketsByIdsApi(
+  page: any,
+  ticketIds: string[],
+  options: { count?: number; baseUrl?: string; concurrency?: number } = {}
+): Promise<any[]> {
+  const ids = [...new Set((Array.isArray(ticketIds) ? ticketIds : [])
+    .map((id) => String(id || '').replace(/\D+/g, ''))
+    .filter(Boolean))];
+  if (!ids.length) {
+    return [];
+  }
+
+  const baseUrl = inferBaseUrl(page, options);
+  const commentsCount = Math.max(1, Number(options.count) || 10);
+  const concurrency = Math.max(1, Math.min(10, Math.floor(Number(options.concurrency) || 4)));
+  const out: any[] = new Array(ids.length);
+  let index = 0;
+
+  const worker = async (): Promise<void> => {
+    while (true) {
+      const current = index;
+      index += 1;
+      if (current >= ids.length) {
+        return;
+      }
+      const id = ids[current];
+      const ticket = await readTicketByIdApi(page, id, { count: commentsCount, baseUrl });
+      out[current] = ticket
+        ? { ok: true, requestedTicketId: id, ...ticket }
+        : {
+            ok: false,
+            requestedTicketId: id,
+            ticketId: id,
+            error: 'Ticket not found or inaccessible with current Zendesk session.',
+            source: 'api'
+          };
+    }
+  };
+
+  await Promise.all(Array.from({ length: Math.min(concurrency, ids.length) }, () => worker()));
+  return out;
+}
+
 export async function findViewByNameApi(page: any, queueName: string): Promise<any> {
   const requested = clean(queueName);
   if (!requested) {

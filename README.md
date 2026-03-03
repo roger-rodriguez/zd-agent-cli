@@ -97,7 +97,11 @@ Required:
 zagent --json queue list
 zagent --json queue read support-open --count 20
 zagent --json ticket read 123456 --comments 10
+zagent ticket read-many 123456 123457 --comments 25 --jsonl
+zagent --json queue read support-open --include-comments --comments 25
+zagent --json queue grep support-open technical-support-open --fields subject,comments --pattern "model|upgrade|SL|subject line"
 zagent --json search tickets "checkout issue" --count 20
+zagent --json search tickets --query "checkout issue" --queue support-open --count 20
 zagent --json auth check
 zagent --json doctor
 

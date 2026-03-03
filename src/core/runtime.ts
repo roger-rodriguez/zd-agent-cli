@@ -230,6 +230,23 @@ export function emitResult(program: any, result: any): void {
     return;
   }
 
+  if (output.command === 'read-ticket-many') {
+    console.log(`Tickets requested: ${output.requestedTicketIds ? output.requestedTicketIds.length : 0}`);
+    console.log(`Succeeded: ${output.successCount || 0}`);
+    console.log(`Failed: ${output.failureCount || 0}`);
+    console.log('');
+    const rows = Array.isArray(output.tickets) ? output.tickets : [];
+    for (let i = 0; i < rows.length; i += 1) {
+      const row = rows[i];
+      if (!row || row.ok !== true) {
+        console.log(`${i + 1}. #${row && row.ticketId ? row.ticketId : '?'} [error] ${row && row.error ? row.error : 'unknown error'}`);
+        continue;
+      }
+      console.log(`${i + 1}. #${row.ticketId || '?'} ${row.subject || '(no subject)'} [${row.status || 'unknown'}]`);
+    }
+    return;
+  }
+
   if (output.command === 'read-queue') {
     console.log(`Queue: ${output.queueName}`);
     console.log(`URL: ${output.pageUrl}`);
@@ -245,10 +262,37 @@ export function emitResult(program: any, result: any): void {
     return;
   }
 
+  if (output.command === 'queue-grep') {
+    console.log(`Pattern: ${output.pattern}`);
+    console.log(`Fields: ${(output.fields || []).join(', ')}`);
+    console.log(`Queues inspected: ${output.inspectedQueues || 0}`);
+    console.log(`Tickets inspected: ${output.inspectedTickets || 0}`);
+    console.log(`Matches: ${output.resultCount || 0}`);
+    console.log('');
+    const rows = Array.isArray(output.matches) ? output.matches : [];
+    for (let i = 0; i < rows.length; i += 1) {
+      const row = rows[i];
+      const fields = Array.isArray(row.matchedFields) ? row.matchedFields.join(',') : '';
+      console.log(`${i + 1}. [${row.queueAlias || '?'}] #${row.ticketId || '?'} ${row.subject || '(no subject)'} (${fields})`);
+      if (row.snippet) {
+        console.log(`   ${row.snippet}`);
+      }
+      if (row.url) {
+        console.log(`   ${row.url}`);
+      }
+    }
+    return;
+  }
+
   if (output.command === 'search-tickets') {
     console.log(`Query: ${output.query}`);
     console.log(`URL: ${output.pageUrl}`);
     console.log(`Hits: ${output.resultCount}`);
+    if (output.queueScope) {
+      console.log(`Queue scope: ${output.queueScope.requestedQueueAlias || output.queueScope.queueName || 'unknown'} (${output.queueScope.mode || 'post-filter'})`);
+      console.log(`Queue size: ${output.queueScope.queueSize || 0}`);
+      console.log(`Unfiltered hits: ${output.unfilteredResultCount || 0}`);
+    }
     if (output.persisted) {
       console.log(`Stored: ${output.persisted.latestPath}`);
     }

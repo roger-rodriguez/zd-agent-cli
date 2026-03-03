@@ -126,6 +126,15 @@ export async function readCurrentUser(page: any): Promise<any> {
   return api.readCurrentUserApi(page);
 }
 
+export async function readTicketsByIds(
+  page: any,
+  ticketIds: string[],
+  options: { count?: number; concurrency?: number } = {}
+): Promise<any[]> {
+  const baseUrl = getBaseUrlFromPage(page);
+  return api.readTicketsByIdsApi(page, ticketIds, { ...options, baseUrl });
+}
+
 export async function isAuthenticated(page: any): Promise<boolean> {
   const user = await readCurrentUser(page);
   return Boolean(user && user.id);

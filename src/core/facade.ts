@@ -44,6 +44,7 @@ export interface CoreFacade {
   readQueueTickets(page: any, options?: { count?: number; fetchAll?: boolean }): Promise<any>;
   openTicketById(page: any, ticketId: string, uiWaitMs?: number): Promise<any>;
   readCurrentTicket(page: any, options?: { count?: number }): Promise<any>;
+  readTicketsByIds(page: any, ticketIds: string[], options?: { count?: number; concurrency?: number }): Promise<any[]>;
   runTicketSearch(page: any, query: string, count?: number, uiWaitMs?: number): Promise<any>;
   readCurrentUser(page: any): Promise<any>;
   isCdpReachable(cdpUrl: string): Promise<boolean>;

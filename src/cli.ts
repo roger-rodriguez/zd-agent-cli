@@ -4,8 +4,10 @@ import { Command } from 'commander';
 import core from './core/index';
 import { loadResolvedConfig } from './core/config';
 import { registerTicketRead } from './cmds/ticket-read';
+import { registerTicketReadMany } from './cmds/ticket-read-many';
 import { registerQueueList } from './cmds/queue-list';
 import { registerQueueRead } from './cmds/queue-read';
+import { registerQueueGrep } from './cmds/queue-grep';
 import { registerSearchTickets } from './cmds/search-tickets';
 import { registerAuthCheck } from './cmds/auth-check';
 import { registerAuthLogin } from './cmds/auth-login';
@@ -69,10 +71,12 @@ program
 
 const ticket = program.command('ticket').description('Ticket commands');
 registerTicketRead(ticket, program, core);
+registerTicketReadMany(ticket, program, core);
 
 const queue = program.command('queue').description('Queue/view commands');
 registerQueueList(queue, program, core);
 registerQueueRead(queue, program, core);
+registerQueueGrep(queue, program, core);
 queue.addHelpText('after', buildQueueHelpText());
 
 const search = program.command('search').description('Search commands');

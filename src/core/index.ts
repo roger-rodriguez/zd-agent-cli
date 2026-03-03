@@ -14,6 +14,7 @@ const core: CoreFacade = {
   emitResult: runtime.emitResult,
   openTicketById: automation.openTicketById,
   readCurrentTicket: automation.readCurrentTicket,
+  readTicketsByIds: automation.readTicketsByIds,
   openQueueByName: automation.openQueueByName,
   readQueueTickets: automation.readQueueTickets,
   runTicketSearch: automation.runTicketSearch,
